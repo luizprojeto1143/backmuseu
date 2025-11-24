@@ -5,6 +5,9 @@
     "outDir": "dist",
     "rootDir": "src",
     "strict": true,
+
+    "strictPropertyInitialization": false,  // 👈 ADICIONE ISTO
+
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
