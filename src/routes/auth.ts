@@ -6,16 +6,17 @@ import { User } from "../entities/User";
 
 const router = Router();
 
-// 🔐 JWT SECRET — conversão correta para tipo Secret
+// 🔐 JWT SECRET — correção final do TS2322
 const jwtSecret: Secret = (process.env.JWT_SECRET || "devsecret") as Secret;
 
+// 🔐 JWT Options
 const jwtOptions: SignOptions = {
   expiresIn: process.env.JWT_EXPIRES_IN || "7d",
 };
 
-// -----------------------------
-// 📌 Registro de usuário
-// -----------------------------
+// -------------------------------------
+// 📌 Registro
+// -------------------------------------
 router.post("/register", async (req, res) => {
   const userRepo = AppDataSource.getRepository(User);
   const { name, email, password } = req.body;
@@ -50,17 +51,15 @@ router.post("/register", async (req, res) => {
   });
 });
 
-// -----------------------------
+// -------------------------------------
 // 📌 Login
-// -----------------------------
+// -------------------------------------
 router.post("/login", async (req, res) => {
   const userRepo = AppDataSource.getRepository(User);
   const { email, password } = req.body;
 
   if (!email || !password) {
-    return res
-      .status(400)
-      .json({ error: "Email e senha são obrigatórios" });
+    return res.status(400).json({ error: "Email e senha são obrigatórios" });
   }
 
   const user = await userRepo.findOne({ where: { email } });
