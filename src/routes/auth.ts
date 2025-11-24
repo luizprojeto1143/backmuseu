@@ -6,8 +6,9 @@ import { User } from "../entities/User";
 
 const router = Router();
 
-// 🔐 Configurações de JWT tipadas corretamente
-const jwtSecret: Secret = process.env.JWT_SECRET || "devsecret";
+// 🔐 JWT SECRET — conversão correta para tipo Secret
+const jwtSecret: Secret = (process.env.JWT_SECRET || "devsecret") as Secret;
+
 const jwtOptions: SignOptions = {
   expiresIn: process.env.JWT_EXPIRES_IN || "7d",
 };
