@@ -6,11 +6,11 @@ import { User } from "../entities/User";
 
 const router = Router();
 
-// 🔐 JWT SECRET — correção FINAL do TS2322
-const jwtSecret: Secret = (process.env.JWT_SECRET || "devsecret") as Secret;
+// 🔐 JWT SECRET — CORREÇÃO FINAL DO TS2322
+const jwtSecret: Secret = process.env.JWT_SECRET ?? "devsecret";
 
 const jwtOptions: SignOptions = {
-  expiresIn: process.env.JWT_EXPIRES_IN || "7d",
+  expiresIn: process.env.JWT_EXPIRES_IN ?? "7d",
 };
 
 // -------------------------------------
@@ -30,11 +30,20 @@ router.post("/register", async (req, res) => {
   }
 
   const password_hash = await bcrypt.hash(password, 10);
-  const user = userRepo.create({ name, email, password_hash });
+
+  const user = userRepo.create({
+    name,
+    email,
+    password_hash,
+  });
+
   await userRepo.save(user);
 
   const token = jwt.sign(
-    { id: user.id, role: user.role },
+    {
+      id: user.id,
+      role: user.role,
+    },
     jwtSecret,
     jwtOptions
   );
@@ -72,7 +81,10 @@ router.post("/login", async (req, res) => {
   }
 
   const token = jwt.sign(
-    { id: user.id, role: user.role },
+    {
+      id: user.id,
+      role: user.role,
+    },
     jwtSecret,
     jwtOptions
   );
