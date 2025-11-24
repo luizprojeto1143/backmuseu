@@ -16,6 +16,9 @@ import userProgressRoutes from "./routes/userProgress";
 import uploadRoutes from "./routes/upload";
 import analyticsRoutes from "./routes/analytics";
 
+// 🔥 IMPORTAR A NOVA ROTA DE SINCRONIZAÇÃO REAL
+import userProgressSyncRoutes from "./routes/userProgressSync";
+
 const app = express();
 
 app.use(helmet());
@@ -40,7 +43,13 @@ app.use("/api/trails", trailsRoutes);
 app.use("/api/events", eventsRoutes);
 app.use("/api/reviews", reviewsRoutes);
 app.use("/api/ai", aiRoutes);
+
+// 🔥 ROTA ANTIGA — PODE MANTER
 app.use("/api/users", userProgressRoutes);
+
+// 🔥 ROTA NOVA — PROGRESSO REAL /sync
+app.use("/api/users/progress", userProgressSyncRoutes);
+
 app.use("/api/upload", uploadRoutes);
 app.use("/api/analytics", analyticsRoutes);
 
