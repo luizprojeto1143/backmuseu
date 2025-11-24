@@ -9,10 +9,11 @@ const PORT = process.env.PORT || 3000;
 
 AppDataSource.initialize()
   .then(async () => {
-    // Import dinâmico correto do seeder
+    // Importa o seeder corretamente
     const { ensureMasterUser } = await import("./utils/master-seeder");
     await ensureMasterUser();
-
+  })
+  .then(() => {
     console.log("📦 Conectado ao banco de dados");
 
     app.listen(PORT, () => {
