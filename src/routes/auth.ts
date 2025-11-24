@@ -6,10 +6,9 @@ import { User } from "../entities/User";
 
 const router = Router();
 
-// 🔐 JWT SECRET — correção final do TS2322
+// 🔐 JWT SECRET — correção FINAL do TS2322
 const jwtSecret: Secret = (process.env.JWT_SECRET || "devsecret") as Secret;
 
-// 🔐 JWT Options
 const jwtOptions: SignOptions = {
   expiresIn: process.env.JWT_EXPIRES_IN || "7d",
 };
