@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
 export interface AuthRequest extends Request {
-  user?: { id: number; role: string };
+  user?: { id: string; role: string };  // 🔥 agora string
 }
 
 export const authMiddleware = (
@@ -23,7 +23,7 @@ export const authMiddleware = (
     ) as any;
 
     req.user = {
-      id: Number(payload.id),
+      id: payload.id,       // 🔥 não converter para número
       role: payload.role,
     };
 
