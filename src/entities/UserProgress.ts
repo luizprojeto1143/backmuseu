@@ -1,28 +1,28 @@
-import { Entity, PrimaryColumn, Column } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from "typeorm";
 
 @Entity()
 export class UserProgress {
-  @PrimaryColumn()
-  user_id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-  @PrimaryColumn()
+  @Column({ type: "int" })
+  user_id: number; // 🔥 AGORA É NUMBER
+
+  @Column({ type: "varchar" })
   tenant_id: string;
 
   @Column({ type: "int", default: 0 })
-  xp: number;
+  viewed_items: number;
 
-  @Column({ type: "int", default: 1 })
-  level: number;
+  @CreateDateColumn()
+  created_at: Date;
 
-  @Column({ type: "simple-array", nullable: true })
-  visited_points: string[];
-
-  @Column({ type: "simple-array", nullable: true })
-  solved_riddles: string[];
-
-  @Column({ type: "simple-array", nullable: true })
-  unlocked_achievements: string[];
-
-  @Column({ type: "text", nullable: true })
-  souvenir_text: string;
+  @UpdateDateColumn()
+  updated_at: Date;
 }
