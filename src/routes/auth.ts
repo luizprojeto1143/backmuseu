@@ -6,6 +6,7 @@ import { User } from "../entities/User";
 
 const router = Router();
 
+// 🔥 Corrige TS2322: sempre string, nunca undefined
 const jwtSecret: Secret = process.env.JWT_SECRET ?? "devsecret";
 
 const jwtOptions: SignOptions = {
@@ -31,7 +32,11 @@ router.post("/register", async (req, res) => {
   const user = userRepo.create({ name, email, password_hash });
   await userRepo.save(user);
 
-  const token = jwt.sign({ id: user.id, role: user.role }, jwtSecret, jwtOptions);
+  const token = jwt.sign(
+    { id: user.id, role: user.role },
+    jwtSecret,
+    jwtOptions
+  );
 
   return res.json({
     token,
@@ -62,7 +67,11 @@ router.post("/login", async (req, res) => {
   if (!validPassword)
     return res.status(401).json({ error: "Credenciais inválidas" });
 
-  const token = jwt.sign({ id: user.id, role: user.role }, jwtSecret, jwtOptions);
+  const token = jwt.sign(
+    { id: user.id, role: user.role },
+    jwtSecret,
+    jwtOptions
+  );
 
   return res.json({
     token,
