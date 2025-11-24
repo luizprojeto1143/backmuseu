@@ -6,14 +6,11 @@ import { User } from "../entities/User";
 
 const router = Router();
 
-// JWT sempre string
 const jwtSecret = process.env.JWT_SECRET ?? "devsecret";
 
-const jwtOptions = {
-  expiresIn: process.env.JWT_EXPIRES_IN ?? "7d",
-};
-
-// REGISTER
+// -------------------------------------
+// Registro
+// -------------------------------------
 router.post("/register", async (req, res) => {
   const userRepo = AppDataSource.getRepository(User);
   const { name, email, password } = req.body;
@@ -33,7 +30,7 @@ router.post("/register", async (req, res) => {
   const token = jwt.sign(
     { id: user.id, role: user.role },
     jwtSecret,
-    jwtOptions
+    { expiresIn: "7d" }   // 🔥 FIX DEFINITIVO
   );
 
   return res.json({
@@ -47,7 +44,9 @@ router.post("/register", async (req, res) => {
   });
 });
 
-// LOGIN
+// -------------------------------------
+// Login
+// -------------------------------------
 router.post("/login", async (req, res) => {
   const userRepo = AppDataSource.getRepository(User);
   const { email, password } = req.body;
@@ -66,7 +65,7 @@ router.post("/login", async (req, res) => {
   const token = jwt.sign(
     { id: user.id, role: user.role },
     jwtSecret,
-    jwtOptions
+    { expiresIn: "7d" }   // 🔥 FIX DEFINITIVO
   );
 
   return res.json({
