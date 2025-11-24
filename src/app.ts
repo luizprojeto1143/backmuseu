@@ -2,7 +2,10 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import path from "path";
-import authRoutes from "./routes/auth";
+
+// 🔥 Agora importando o arquivo RENOMEADO
+import authRoutes from "./routes/authRoutes";
+
 import tenantRoutes from "./routes/tenants";
 import pointsRoutes from "./routes/points";
 import trailsRoutes from "./routes/trails";
@@ -28,7 +31,9 @@ app.get("/health", (req, res) => {
   res.json({ ok: true });
 });
 
+// 🔥 Agora usando a rota correta renomeada
 app.use("/api/auth", authRoutes);
+
 app.use("/api/tenants", tenantRoutes);
 app.use("/api/points", pointsRoutes);
 app.use("/api/trails", trailsRoutes);
